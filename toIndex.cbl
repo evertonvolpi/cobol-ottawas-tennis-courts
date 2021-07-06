@@ -1,0 +1,101 @@
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. TOINDEX.
+       AUTHOR. EVERTON VOLPI.
+
+       ENVIRONMENT DIVISION.
+       INPUT-OUTPUT SECTION.
+       FILE-CONTROL.
+
+	   SELECT ORIGINAL ASSIGN TO "ottawaTennisCourts.dat"
+	       ORGANIZATION IS LINE SEQUENTIAL.
+       
+       SELECT INDEXEDFILE ASSIGN TO "indexed.dat"
+        FILE STATUS IS FILE-CHECK-KEY
+        ORGANIZATION IS INDEXED
+        ACCESS MODE IS RANDOM
+        RECORD KEY IS ROW-ID-IDX
+        ALTERNATE RECORD KEY IS REGION-IDX WITH DUPLICATES
+        ALTERNATE RECORD KEY IS LIGHTS-IDX WITH DUPLICATES
+        ALTERNATE RECORD KEY IS CLUBHOUSE-IDX WITH DUPLICATES
+        ALTERNATE RECORD KEY IS BENCHES-IDX WITH DUPLICATES
+        ALTERNATE RECORD KEY IS FENCE-IDX WITH DUPLICATES
+        ALTERNATE RECORD KEY IS PRACTICE-COURT-IDX WITH DUPLICATES
+        ALTERNATE RECORD KEY IS BACKWALL-IDX WITH DUPLICATES.
+
+       DATA DIVISION.
+       FILE SECTION.
+	   FD INDEXEDFILE.
+	   01 TENNISCOURTSIDX.
+	       05 ROW-ID-IDX           PIC 9(3).
+           05 PARK-ID-IDX          PIC X(10).
+           05 REGION-IDX           PIC A(13).
+           05 PARK-NAME-IDX        PIC A(62).
+           05 PARK-ADDRESS-IDX     PIC A(51).
+           05 TOTAL-COURTS-IDX     PIC X(5).
+           05 INDOOR-COURTS-IDX    PIC X(5).
+           05 OUTDOOR-COURTS-IDX   PIC X(10).
+           05 LIGHTS-IDX           PIC X(9).
+           05 CLUBHOUSE-IDX        PIC X(9).
+           05 BENCHES-IDX          PIC X(9).
+           05 FENCE-IDX            PIC X(9).
+           05 PRACTICE-COURT-IDX   PIC X(9).
+           05 BACKWALL-IDX         PIC X(9).
+	
+       FD ORIGINAL.
+	   01 TENNISCOURTSSEQ.
+           88 ENDOFFILE            VALUE HIGH-VALUES.
+           05 ROW-ID               PIC 9(3).
+           05 PARK-ID              PIC X(10).
+           05 REGION               PIC A(13).
+           05 PARK-NAME            PIC A(62).
+           05 PARK-ADDRESS         PIC A(51).
+           05 TOTAL-COURTS         PIC X(5).
+           05 INDOOR-COURTS        PIC X(5).
+           05 OUTDOOR-COURTS       PIC X(10).
+           05 LIGHTS               PIC X(9).
+           05 CLUBHOUSE            PIC X(9).
+           05 BENCHES              PIC X(9).
+           05 FENCE                PIC X(9).
+           05 PRACTICE-COURT       PIC X(9).
+           05 BACKWALL             PIC X(9).
+	
+		
+       WORKING-STORAGE SECTION.
+       01  WS-WORKING-STORAGE.
+           05 FILLER      PIC X(27) VALUE 
+		      'WORKING STORAGE STARTS HERE'.
+   
+	   01  WS-WORK-AREAS.
+	       05  FILE-CHECK-KEY     PIC X(2).
+
+       PROCEDURE DIVISION.
+       0100-READ-FILE.
+
+		   OPEN INPUT ORIGINAL.
+		   OPEN OUTPUT INDEXEDFILE.
+		   				
+           READ ORIGINAL 
+		     AT END SET ENDOFFILE TO TRUE
+		   END-READ.
+		   PERFORM 0200-PROCESS-FILE UNTIL
+		      ENDOFFILE.
+		 
+		   PERFORM 9000-END-PROGRAM.
+		   
+	   0100-END.
+	   
+	   0200-PROCESS-FILE.
+	  
+		   WRITE TENNISCOURTSIDX FROM TENNISCOURTSSEQ
+		      INVALID KEY DISPLAY 
+			     ROW-ID, " STATUS = ", FILE-CHECK-KEY
+		   END-WRITE.
+		   READ ORIGINAL
+		      AT END SET ENDOFFILE TO TRUE.
+       0200-END.
+		   
+	   9000-END-PROGRAM.
+           CLOSE INDEXEDFILE, ORIGINAL. 
+           STOP RUN.
+           
+       END PROGRAM TOINDEX.
