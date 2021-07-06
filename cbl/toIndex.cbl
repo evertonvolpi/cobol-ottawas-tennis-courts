@@ -6,10 +6,10 @@
        INPUT-OUTPUT SECTION.
        FILE-CONTROL.
 
-	   SELECT ORIGINAL ASSIGN TO "ottawaTennisCourts.dat"
+	   SELECT ORIGINAL ASSIGN TO "../files/otwData.dat"
 	       ORGANIZATION IS LINE SEQUENTIAL.
        
-       SELECT INDEXEDFILE ASSIGN TO "indexed.dat"
+       SELECT INDEXEDFILE ASSIGN TO "../idxd/indexed.dat"
         FILE STATUS IS FILE-CHECK-KEY
         ORGANIZATION IS INDEXED
         ACCESS MODE IS RANDOM
