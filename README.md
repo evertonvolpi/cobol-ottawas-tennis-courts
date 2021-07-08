@@ -13,3 +13,5 @@ The project is divided in four major steps:
    * Displays a menu for the user to choose one from many `key` options
    * Displays results in human readable format; computes and displays how many results were found
    * Displays a final menu for the user to choose to continue/start over or quit/exit.
+
+[![Ottawa Database](https://github.com/evertonvolpi/cobol-ottawas-tennis-courts/blob/main/img/otwdata.png?raw=true)](#)
