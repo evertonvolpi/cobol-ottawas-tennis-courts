@@ -47,3 +47,6 @@ The project is divided in four major steps:
 ###### The results also include the total of results displayed (in the footer):
 ![CLUBHOUSE Selection](https://github.com/evertonvolpi/cobol-ottawas-tennis-courts/blob/main/img/readIndex4.png?raw=true)
 <br/><br/>
+
+##### Here's a demo of the COBOL program [readIndex.cbl](cbl/readIndex.cbl) running:
+![Program running](https://github.com/evertonvolpi/cobol-ottawas-tennis-courts/blob/main/img/programRunning.gif?raw=true)
